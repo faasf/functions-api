@@ -1,8 +1,7 @@
 FROM alpine:3.17
 
 WORKDIR /app
-
-RUN mkdir config && touch config/config.yml
+RUN mkdir -p internal/config && touch internal/config/config.yml
 
 COPY build/ .
 
