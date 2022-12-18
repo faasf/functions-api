@@ -1,0 +1,12 @@
+app:
+  name: "functions-api"
+  version: "0.0.1"
+
+http:
+  port: "8080"
+
+logger:
+  logLevel: "debug"
+
+dapr:
+  storeName: "statestore-mongo"
