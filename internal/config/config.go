@@ -19,7 +19,8 @@ type (
 	}
 
 	HTTP struct {
-		Port string `env-required:"true" yaml:"port" env:"HTTP_PORT"`
+		Port             string `env-required:"true" yaml:"port" env:"HTTP_PORT"`
+		NodeJsRuntimeUrl string `env-required:"true" yaml:"nodeJsRuntimeUrl" env:"HTTP_NODEJS_RUNTIME_URL"`
 	}
 
 	Log struct {

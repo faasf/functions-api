@@ -2,6 +2,7 @@ package v1
 
 import (
 	"encoding/json"
+	"github.com/faasf/functions-api/internal/config"
 	"github.com/faasf/functions-api/internal/models"
 	"github.com/faasf/functions-api/internal/models/enums"
 	"github.com/faasf/functions-api/internal/services"
@@ -27,7 +28,7 @@ func CORS() gin.HandlerFunc {
 	}
 }
 
-func NewRouter(handler *gin.Engine, l logger.Interface, s services.FunctionsService) {
+func NewRouter(handler *gin.Engine, l logger.Interface, cfg *config.Config, s services.FunctionsService) {
 	handler.Use(CORS())
 	handler.Use(gin.Logger())
 	handler.Use(gin.Recovery())
@@ -42,10 +43,10 @@ func NewRouter(handler *gin.Engine, l logger.Interface, s services.FunctionsServ
 		newFunctionRoutes(h, s, l)
 	}
 
-	handler.NoRoute(registerHttpHandlers(s))
+	handler.NoRoute(registerHttpHandlers(cfg, s))
 }
 
-func registerHttpHandlers(s services.FunctionsService) func(c *gin.Context) {
+func registerHttpHandlers(cfg *config.Config, s services.FunctionsService) func(c *gin.Context) {
 	return func(c *gin.Context) {
 		fns, _ := s.GetAll(c)
 		m := map[string]models.Function{}
@@ -83,7 +84,7 @@ func registerHttpHandlers(s services.FunctionsService) func(c *gin.Context) {
 		}
 
 		c.Request.Header.Add("x-function-data", string(fnDataJson))
-		Proxy(c)
+		Proxy(cfg, c)
 	}
 }
 

@@ -4,6 +4,7 @@ app:
 
 http:
   port: "8080"
+  nodeJsRuntimeUrl: "http://localhost:8082"
 
 logger:
   logLevel: "debug"

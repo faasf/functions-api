@@ -22,7 +22,7 @@ func Run(cfg *config.Config) {
 	functionsService := functionsService.New(functionsRepo.New(cfg))
 
 	handler := gin.New()
-	v1.NewRouter(handler, l, functionsService)
+	v1.NewRouter(handler, l, cfg, functionsService)
 	httpServer := httpserver.New(handler, httpserver.Port(cfg.HTTP.Port))
 
 	interrupt := make(chan os.Signal, 1)
